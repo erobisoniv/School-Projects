@@ -1,0 +1,32 @@
+
+                        Python Programming
+                            Spring 2012
+                             Project 3
+
+
+turnin code:  py_p3
+
+
+Write a python program which will be executed on the ranger systems.
+It should read a file named as the first command-line argument.
+
+The file to be read will contain lines which represent sequences of DNA.
+Each line of the file will begin in column 1 and contain two items
+separated by a single blank.  The first item will be a sequence ID,
+and the second item will be the sequence itself.
+
+Examine each sequence to find any candidate genes that may be present in
+any of the 3 reading frames.  You may assume that all start codons are
+'atg' and that all stop codons are 'tag'.  When you find a candidate gene,
+print the ID of the sequence and the displacement into the sequence of
+the beginning of the start codon for the gene (relative to 0) and the
+length of the gene including all 3 nucleotides of the stop codon.  Do not
+accept candidate genes that are less than 20 nucleotides or more than 100.
+You may assume that no candidate gene is contained within another.
+
+Inside your program, define a variable named REGEX, and assign it a
+regular expression value at least as complex as shown here:
+        REGEX = r'atg(.{20,100})tag'
+and use your regular expression in detection of candidate genes.
+
+Use turnin to submit a single source file containing your program.

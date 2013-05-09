@@ -1,0 +1,27 @@
+denning developed the scan disk scheduling strategy to reduce the unfairness
+and variance of response times exhibited by sstf.  scan chooses the request that
+requires the shortes seek distance in a preferred direction.  thus, if the
+preferred direction is currently outward, the scan strategy chooses the shortest
+seek distance in the outward direction.  scan does not change its preferred
+direction until it reaches the outermost cylinder or the innermost cylinder.
+in this sense, it is called the elevator algorithm, because an elevator 
+continues in one direction servicing requests before reversing direction.
+scan behaves much like sstf in terms of high trhoughput and good mean
+response times.  however, because scan ensures that all requests in a given direction
+will be serviced before the requests in the opposite direction, it offers a lower variance
+of response times than sstf.  scan, like sstf, is a cylinder oriented strategy.
+because the read write heads oscillate between opposite ends of each platter in
+scan, the outer tracks are visited less often than the midrange tracks, but generally
+moe often than they would be using sstf.  because arriving requests can be serviced
+before waiting requests, both sstf and scan can suffer indefinite postponement.
+the look variation of the scan strategy looks ahead to the end of the current
+sweep to determine the next request to service.  if there are no more requests in the
+current direction, look changes the preferred direction and begins the next
+sweep.  in this sense, it is appropriate to call this the elevator algorithm,
+because an elevator continues in one direction until it reaches the last request in
+that direction, then reverses direction'  this strategy eliminates unnecessary seek
+operations exhibited by other variations of the scan strategy compare the left
+side of to the corresponding location in.
+circular look variation of the look strategy uses the same technique as cscan to
+reduce the bias against requests located at the extreme ends of the platters.
+book quote

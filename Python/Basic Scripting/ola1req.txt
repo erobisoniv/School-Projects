@@ -1,0 +1,28 @@
+
+                        Python Programming
+                            Spring 2012
+                             Project 1
+
+
+turnin code:  py_p1
+
+
+Write a python program which will be executed on the ranger systems.
+It should read a file named as the only command-line argument.
+It should find the first line in the file where x exceeds 8000.
+It should find the first line in the file where y exceeds 9000.
+The only lines needing to be examined contain either 'x=' or 'y='.
+
+When you find the desired line(s), print the line (wihtout its newline),
+and then on a separate line, print the rank of the printing process,
+which is the first value without leading zeros; also print the time of
+the print in whole (integer) seconds; then print the value for x or y.
+
+So, for this line:
+    000800: 1031: 8000.320347:  x=8888
+you would print this:
+
+000800: 1031: 8000.320347:  x=8888
+800 8000 x=8888
+
+Use turnin to submit a single source file containing your program.
