@@ -1,0 +1,2501 @@
+State 8 conflicts: 1 shift/reduce
+State 80 conflicts: 13 shift/reduce
+State 81 conflicts: 12 shift/reduce
+State 109 conflicts: 12 shift/reduce
+State 117 conflicts: 12 shift/reduce
+State 128 conflicts: 12 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: exp
+
+    2 exp: STRING
+    3    | INT
+    4    | NIL
+    5    | lvalue ASSIGN exp
+    6    | lvalue
+    7    | LPAREN exp_seq RPAREN
+    8    | exp PLUS exp
+    9    | exp MINUS exp
+   10    | exp MUL exp
+   11    | exp DIV exp
+   12    | exp EQ exp
+   13    | exp NE exp
+   14    | exp LT exp
+   15    | exp LE exp
+   16    | exp GT exp
+   17    | exp GE exp
+   18    | MINUS exp
+   19    | exp AND exp
+   20    | exp OR exp
+   21    | ID LPAREN exp_list RPAREN
+   22    | ID LBRACE field_list RBRACE
+   23    | ID LBRACK exp RBRACK OF exp
+   24    | IF exp THEN exp
+   25    | IF exp THEN exp ELSE exp
+   26    | WHILE exp DO exp
+   27    | FOR ID ASSIGN exp TO exp DO exp
+   28    | BREAK
+   29    | LET decs IN exp_seq END
+
+   30 exp_seq: exp SEMICOLON exp_seq
+   31        | exp
+   32        | /* empty */
+
+   33 exp_list: exp COMMA exp_list
+   34         | exp
+   35         | /* empty */
+
+   36 field_list: /* empty */
+   37           | ID EQ exp
+   38           | ID EQ exp COMMA field_list
+
+   39 lvalue: ID
+   40       | lvalue DOT ID
+   41       | lvalue LBRACK exp RBRACK
+   42       | ID LBRACK exp RBRACK
+
+   43 dec_list: dec dec_list
+   44         | dec
+
+   45 decs: dec_list
+   46     | /* empty */
+
+   47 dec: type_dec
+   48    | var_dec
+   49    | field_dec
+
+   50 type_dec: TYPE ID EQ type
+
+   51 type: ID
+   52     | LBRACE type_fields RBRACE
+   53     | ARRAY OF ID
+
+   54 type_fields: /* empty */
+   55            | type_field
+   56            | type_field COMMA type_fields
+
+   57 type_field: ID COLON ID
+
+   58 var_dec: VAR ID COLON ID ASSIGN exp
+   59        | VAR ID ASSIGN exp
+
+   60 field_dec: FUNCTION ID LPAREN type_fields RPAREN EQ exp
+   61          | FUNCTION ID LPAREN type_fields RPAREN COLON ID EQ exp
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+COMMA (258) 33 38 56
+COLON (259) 57 58 61
+SEMICOLON (260) 30
+LPAREN (261) 7 21 60 61
+RPAREN (262) 7 21 60 61
+LBRACK (263) 23 41 42
+RBRACK (264) 23 41 42
+LBRACE (265) 22 52
+RBRACE (266) 22 52
+DOT (267) 40
+ARRAY (268) 53
+IF (269) 24 25
+THEN (270) 24 25
+ELSE (271) 25
+WHILE (272) 26
+FOR (273) 27
+TO (274) 27
+DO (275) 26 27
+LET (276) 29
+IN (277) 29
+END (278) 29
+OF (279) 23 53
+BREAK (280) 28
+NIL (281) 4
+FUNCTION (282) 60 61
+VAR (283) 58 59
+TYPE (284) 50
+ID (285) 21 22 23 27 37 38 39 40 42 50 51 53 57 58 59 60 61
+STRING (286) 2
+INT (287) 3
+ASSIGN (288) 5 27 58 59
+OR (289) 20
+AND (290) 19
+GE (291) 17
+GT (292) 16
+LE (293) 15
+LT (294) 14
+NE (295) 13
+EQ (296) 12 37 38 50 60 61
+MINUS (297) 9 18
+PLUS (298) 8
+DIV (299) 11
+MUL (300) 10
+UMINUS (301)
+
+
+Nonterminals, with rules where they appear
+
+$accept (47)
+    on left: 0
+program (48)
+    on left: 1, on right: 0
+exp (49)
+    on left: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22
+    23 24 25 26 27 28 29, on right: 1 5 8 9 10 11 12 13 14 15 16 17
+    18 19 20 23 24 25 26 27 30 31 33 34 37 38 41 42 58 59 60 61
+exp_seq (50)
+    on left: 30 31 32, on right: 7 29 30
+exp_list (51)
+    on left: 33 34 35, on right: 21 33
+field_list (52)
+    on left: 36 37 38, on right: 22 38
+lvalue (53)
+    on left: 39 40 41 42, on right: 5 6 40 41
+dec_list (54)
+    on left: 43 44, on right: 43 45
+decs (55)
+    on left: 45 46, on right: 29
+dec (56)
+    on left: 47 48 49, on right: 43 44
+type_dec (57)
+    on left: 50, on right: 47
+type (58)
+    on left: 51 52 53, on right: 50
+type_fields (59)
+    on left: 54 55 56, on right: 52 56 60 61
+type_field (60)
+    on left: 57, on right: 55 56
+var_dec (61)
+    on left: 58 59, on right: 48
+field_dec (62)
+    on left: 60 61, on right: 49
+
+
+state 0
+
+    0 $accept: . program $end
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    program  go to state 12
+    exp      go to state 13
+    lvalue   go to state 14
+
+
+state 1
+
+    7 exp: LPAREN . exp_seq RPAREN
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    $default  reduce using rule 32 (exp_seq)
+
+    exp      go to state 15
+    exp_seq  go to state 16
+    lvalue   go to state 14
+
+
+state 2
+
+   24 exp: IF . exp THEN exp
+   25    | IF . exp THEN exp ELSE exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 17
+    lvalue  go to state 14
+
+
+state 3
+
+   26 exp: WHILE . exp DO exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 18
+    lvalue  go to state 14
+
+
+state 4
+
+   27 exp: FOR . ID ASSIGN exp TO exp DO exp
+
+    ID  shift, and go to state 19
+
+
+state 5
+
+   29 exp: LET . decs IN exp_seq END
+
+    FUNCTION  shift, and go to state 20
+    VAR       shift, and go to state 21
+    TYPE      shift, and go to state 22
+
+    $default  reduce using rule 46 (decs)
+
+    dec_list   go to state 23
+    decs       go to state 24
+    dec        go to state 25
+    type_dec   go to state 26
+    var_dec    go to state 27
+    field_dec  go to state 28
+
+
+state 6
+
+   28 exp: BREAK .
+
+    $default  reduce using rule 28 (exp)
+
+
+state 7
+
+    4 exp: NIL .
+
+    $default  reduce using rule 4 (exp)
+
+
+state 8
+
+   21 exp: ID . LPAREN exp_list RPAREN
+   22    | ID . LBRACE field_list RBRACE
+   23    | ID . LBRACK exp RBRACK OF exp
+   39 lvalue: ID .
+   42       | ID . LBRACK exp RBRACK
+
+    LPAREN  shift, and go to state 29
+    LBRACK  shift, and go to state 30
+    LBRACE  shift, and go to state 31
+
+    LBRACK    [reduce using rule 39 (lvalue)]
+    $default  reduce using rule 39 (lvalue)
+
+
+state 9
+
+    2 exp: STRING .
+
+    $default  reduce using rule 2 (exp)
+
+
+state 10
+
+    3 exp: INT .
+
+    $default  reduce using rule 3 (exp)
+
+
+state 11
+
+   18 exp: MINUS . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 32
+    lvalue  go to state 14
+
+
+state 12
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 33
+
+
+state 13
+
+    1 program: exp .
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    $default  reduce using rule 1 (program)
+
+
+state 14
+
+    5 exp: lvalue . ASSIGN exp
+    6    | lvalue .
+   40 lvalue: lvalue . DOT ID
+   41       | lvalue . LBRACK exp RBRACK
+
+    LBRACK  shift, and go to state 46
+    DOT     shift, and go to state 47
+    ASSIGN  shift, and go to state 48
+
+    $default  reduce using rule 6 (exp)
+
+
+state 15
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   30 exp_seq: exp . SEMICOLON exp_seq
+   31        | exp .
+
+    SEMICOLON  shift, and go to state 49
+    OR         shift, and go to state 34
+    AND        shift, and go to state 35
+    GE         shift, and go to state 36
+    GT         shift, and go to state 37
+    LE         shift, and go to state 38
+    LT         shift, and go to state 39
+    NE         shift, and go to state 40
+    EQ         shift, and go to state 41
+    MINUS      shift, and go to state 42
+    PLUS       shift, and go to state 43
+    DIV        shift, and go to state 44
+    MUL        shift, and go to state 45
+
+    $default  reduce using rule 31 (exp_seq)
+
+
+state 16
+
+    7 exp: LPAREN exp_seq . RPAREN
+
+    RPAREN  shift, and go to state 50
+
+
+state 17
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   24    | IF exp . THEN exp
+   25    | IF exp . THEN exp ELSE exp
+
+    THEN   shift, and go to state 51
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+
+state 18
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   26    | WHILE exp . DO exp
+
+    DO     shift, and go to state 52
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+
+state 19
+
+   27 exp: FOR ID . ASSIGN exp TO exp DO exp
+
+    ASSIGN  shift, and go to state 53
+
+
+state 20
+
+   60 field_dec: FUNCTION . ID LPAREN type_fields RPAREN EQ exp
+   61          | FUNCTION . ID LPAREN type_fields RPAREN COLON ID EQ exp
+
+    ID  shift, and go to state 54
+
+
+state 21
+
+   58 var_dec: VAR . ID COLON ID ASSIGN exp
+   59        | VAR . ID ASSIGN exp
+
+    ID  shift, and go to state 55
+
+
+state 22
+
+   50 type_dec: TYPE . ID EQ type
+
+    ID  shift, and go to state 56
+
+
+state 23
+
+   45 decs: dec_list .
+
+    $default  reduce using rule 45 (decs)
+
+
+state 24
+
+   29 exp: LET decs . IN exp_seq END
+
+    IN  shift, and go to state 57
+
+
+state 25
+
+   43 dec_list: dec . dec_list
+   44         | dec .
+
+    FUNCTION  shift, and go to state 20
+    VAR       shift, and go to state 21
+    TYPE      shift, and go to state 22
+
+    $default  reduce using rule 44 (dec_list)
+
+    dec_list   go to state 58
+    dec        go to state 25
+    type_dec   go to state 26
+    var_dec    go to state 27
+    field_dec  go to state 28
+
+
+state 26
+
+   47 dec: type_dec .
+
+    $default  reduce using rule 47 (dec)
+
+
+state 27
+
+   48 dec: var_dec .
+
+    $default  reduce using rule 48 (dec)
+
+
+state 28
+
+   49 dec: field_dec .
+
+    $default  reduce using rule 49 (dec)
+
+
+state 29
+
+   21 exp: ID LPAREN . exp_list RPAREN
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    $default  reduce using rule 35 (exp_list)
+
+    exp       go to state 59
+    exp_list  go to state 60
+    lvalue    go to state 14
+
+
+state 30
+
+   23 exp: ID LBRACK . exp RBRACK OF exp
+   42 lvalue: ID LBRACK . exp RBRACK
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 61
+    lvalue  go to state 14
+
+
+state 31
+
+   22 exp: ID LBRACE . field_list RBRACE
+
+    ID  shift, and go to state 62
+
+    $default  reduce using rule 36 (field_list)
+
+    field_list  go to state 63
+
+
+state 32
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   18    | MINUS exp .
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    $default  reduce using rule 18 (exp)
+
+
+state 33
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 34
+
+   20 exp: exp OR . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 64
+    lvalue  go to state 14
+
+
+state 35
+
+   19 exp: exp AND . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 65
+    lvalue  go to state 14
+
+
+state 36
+
+   17 exp: exp GE . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 66
+    lvalue  go to state 14
+
+
+state 37
+
+   16 exp: exp GT . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 67
+    lvalue  go to state 14
+
+
+state 38
+
+   15 exp: exp LE . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 68
+    lvalue  go to state 14
+
+
+state 39
+
+   14 exp: exp LT . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 69
+    lvalue  go to state 14
+
+
+state 40
+
+   13 exp: exp NE . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 70
+    lvalue  go to state 14
+
+
+state 41
+
+   12 exp: exp EQ . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 71
+    lvalue  go to state 14
+
+
+state 42
+
+    9 exp: exp MINUS . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 72
+    lvalue  go to state 14
+
+
+state 43
+
+    8 exp: exp PLUS . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 73
+    lvalue  go to state 14
+
+
+state 44
+
+   11 exp: exp DIV . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 74
+    lvalue  go to state 14
+
+
+state 45
+
+   10 exp: exp MUL . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 75
+    lvalue  go to state 14
+
+
+state 46
+
+   41 lvalue: lvalue LBRACK . exp RBRACK
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 76
+    lvalue  go to state 14
+
+
+state 47
+
+   40 lvalue: lvalue DOT . ID
+
+    ID  shift, and go to state 77
+
+
+state 48
+
+    5 exp: lvalue ASSIGN . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 78
+    lvalue  go to state 14
+
+
+state 49
+
+   30 exp_seq: exp SEMICOLON . exp_seq
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    $default  reduce using rule 32 (exp_seq)
+
+    exp      go to state 15
+    exp_seq  go to state 79
+    lvalue   go to state 14
+
+
+state 50
+
+    7 exp: LPAREN exp_seq RPAREN .
+
+    $default  reduce using rule 7 (exp)
+
+
+state 51
+
+   24 exp: IF exp THEN . exp
+   25    | IF exp THEN . exp ELSE exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 80
+    lvalue  go to state 14
+
+
+state 52
+
+   26 exp: WHILE exp DO . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 81
+    lvalue  go to state 14
+
+
+state 53
+
+   27 exp: FOR ID ASSIGN . exp TO exp DO exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 82
+    lvalue  go to state 14
+
+
+state 54
+
+   60 field_dec: FUNCTION ID . LPAREN type_fields RPAREN EQ exp
+   61          | FUNCTION ID . LPAREN type_fields RPAREN COLON ID EQ exp
+
+    LPAREN  shift, and go to state 83
+
+
+state 55
+
+   58 var_dec: VAR ID . COLON ID ASSIGN exp
+   59        | VAR ID . ASSIGN exp
+
+    COLON   shift, and go to state 84
+    ASSIGN  shift, and go to state 85
+
+
+state 56
+
+   50 type_dec: TYPE ID . EQ type
+
+    EQ  shift, and go to state 86
+
+
+state 57
+
+   29 exp: LET decs IN . exp_seq END
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    $default  reduce using rule 32 (exp_seq)
+
+    exp      go to state 15
+    exp_seq  go to state 87
+    lvalue   go to state 14
+
+
+state 58
+
+   43 dec_list: dec dec_list .
+
+    $default  reduce using rule 43 (dec_list)
+
+
+state 59
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   33 exp_list: exp . COMMA exp_list
+   34         | exp .
+
+    COMMA  shift, and go to state 88
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    $default  reduce using rule 34 (exp_list)
+
+
+state 60
+
+   21 exp: ID LPAREN exp_list . RPAREN
+
+    RPAREN  shift, and go to state 89
+
+
+state 61
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   23    | ID LBRACK exp . RBRACK OF exp
+   42 lvalue: ID LBRACK exp . RBRACK
+
+    RBRACK  shift, and go to state 90
+    OR      shift, and go to state 34
+    AND     shift, and go to state 35
+    GE      shift, and go to state 36
+    GT      shift, and go to state 37
+    LE      shift, and go to state 38
+    LT      shift, and go to state 39
+    NE      shift, and go to state 40
+    EQ      shift, and go to state 41
+    MINUS   shift, and go to state 42
+    PLUS    shift, and go to state 43
+    DIV     shift, and go to state 44
+    MUL     shift, and go to state 45
+
+
+state 62
+
+   37 field_list: ID . EQ exp
+   38           | ID . EQ exp COMMA field_list
+
+    EQ  shift, and go to state 91
+
+
+state 63
+
+   22 exp: ID LBRACE field_list . RBRACE
+
+    RBRACE  shift, and go to state 92
+
+
+state 64
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   20    | exp OR exp .
+
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    OR  error (nonassociative)
+
+    $default  reduce using rule 20 (exp)
+
+
+state 65
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   19    | exp AND exp .
+   20    | exp . OR exp
+
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    AND  error (nonassociative)
+
+    $default  reduce using rule 19 (exp)
+
+
+state 66
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   17    | exp GE exp .
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    GE  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    LT  error (nonassociative)
+    NE  error (nonassociative)
+    EQ  error (nonassociative)
+
+    $default  reduce using rule 17 (exp)
+
+
+state 67
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   16    | exp GT exp .
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    GE  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    LT  error (nonassociative)
+    NE  error (nonassociative)
+    EQ  error (nonassociative)
+
+    $default  reduce using rule 16 (exp)
+
+
+state 68
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   15    | exp LE exp .
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    GE  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    LT  error (nonassociative)
+    NE  error (nonassociative)
+    EQ  error (nonassociative)
+
+    $default  reduce using rule 15 (exp)
+
+
+state 69
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   14    | exp LT exp .
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    GE  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    LT  error (nonassociative)
+    NE  error (nonassociative)
+    EQ  error (nonassociative)
+
+    $default  reduce using rule 14 (exp)
+
+
+state 70
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   13    | exp NE exp .
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    GE  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    LT  error (nonassociative)
+    NE  error (nonassociative)
+    EQ  error (nonassociative)
+
+    $default  reduce using rule 13 (exp)
+
+
+state 71
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   12    | exp EQ exp .
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    GE  error (nonassociative)
+    GT  error (nonassociative)
+    LE  error (nonassociative)
+    LT  error (nonassociative)
+    NE  error (nonassociative)
+    EQ  error (nonassociative)
+
+    $default  reduce using rule 12 (exp)
+
+
+state 72
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+    9    | exp MINUS exp .
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    DIV  shift, and go to state 44
+    MUL  shift, and go to state 45
+
+    $default  reduce using rule 9 (exp)
+
+
+state 73
+
+    8 exp: exp . PLUS exp
+    8    | exp PLUS exp .
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    DIV  shift, and go to state 44
+    MUL  shift, and go to state 45
+
+    $default  reduce using rule 8 (exp)
+
+
+state 74
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   11    | exp DIV exp .
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    $default  reduce using rule 11 (exp)
+
+
+state 75
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   10    | exp MUL exp .
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    $default  reduce using rule 10 (exp)
+
+
+state 76
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   41 lvalue: lvalue LBRACK exp . RBRACK
+
+    RBRACK  shift, and go to state 93
+    OR      shift, and go to state 34
+    AND     shift, and go to state 35
+    GE      shift, and go to state 36
+    GT      shift, and go to state 37
+    LE      shift, and go to state 38
+    LT      shift, and go to state 39
+    NE      shift, and go to state 40
+    EQ      shift, and go to state 41
+    MINUS   shift, and go to state 42
+    PLUS    shift, and go to state 43
+    DIV     shift, and go to state 44
+    MUL     shift, and go to state 45
+
+
+state 77
+
+   40 lvalue: lvalue DOT ID .
+
+    $default  reduce using rule 40 (lvalue)
+
+
+state 78
+
+    5 exp: lvalue ASSIGN exp .
+    8    | exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    $default  reduce using rule 5 (exp)
+
+
+state 79
+
+   30 exp_seq: exp SEMICOLON exp_seq .
+
+    $default  reduce using rule 30 (exp_seq)
+
+
+state 80
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   24    | IF exp THEN exp .
+   25    | IF exp THEN exp . ELSE exp
+
+    ELSE   shift, and go to state 94
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    ELSE      [reduce using rule 24 (exp)]
+    OR        [reduce using rule 24 (exp)]
+    AND       [reduce using rule 24 (exp)]
+    GE        [reduce using rule 24 (exp)]
+    GT        [reduce using rule 24 (exp)]
+    LE        [reduce using rule 24 (exp)]
+    LT        [reduce using rule 24 (exp)]
+    NE        [reduce using rule 24 (exp)]
+    EQ        [reduce using rule 24 (exp)]
+    MINUS     [reduce using rule 24 (exp)]
+    PLUS      [reduce using rule 24 (exp)]
+    DIV       [reduce using rule 24 (exp)]
+    MUL       [reduce using rule 24 (exp)]
+    $default  reduce using rule 24 (exp)
+
+
+state 81
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   26    | WHILE exp DO exp .
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    OR        [reduce using rule 26 (exp)]
+    AND       [reduce using rule 26 (exp)]
+    GE        [reduce using rule 26 (exp)]
+    GT        [reduce using rule 26 (exp)]
+    LE        [reduce using rule 26 (exp)]
+    LT        [reduce using rule 26 (exp)]
+    NE        [reduce using rule 26 (exp)]
+    EQ        [reduce using rule 26 (exp)]
+    MINUS     [reduce using rule 26 (exp)]
+    PLUS      [reduce using rule 26 (exp)]
+    DIV       [reduce using rule 26 (exp)]
+    MUL       [reduce using rule 26 (exp)]
+    $default  reduce using rule 26 (exp)
+
+
+state 82
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   27    | FOR ID ASSIGN exp . TO exp DO exp
+
+    TO     shift, and go to state 95
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+
+state 83
+
+   60 field_dec: FUNCTION ID LPAREN . type_fields RPAREN EQ exp
+   61          | FUNCTION ID LPAREN . type_fields RPAREN COLON ID EQ exp
+
+    ID  shift, and go to state 96
+
+    $default  reduce using rule 54 (type_fields)
+
+    type_fields  go to state 97
+    type_field   go to state 98
+
+
+state 84
+
+   58 var_dec: VAR ID COLON . ID ASSIGN exp
+
+    ID  shift, and go to state 99
+
+
+state 85
+
+   59 var_dec: VAR ID ASSIGN . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 100
+    lvalue  go to state 14
+
+
+state 86
+
+   50 type_dec: TYPE ID EQ . type
+
+    LBRACE  shift, and go to state 101
+    ARRAY   shift, and go to state 102
+    ID      shift, and go to state 103
+
+    type  go to state 104
+
+
+state 87
+
+   29 exp: LET decs IN exp_seq . END
+
+    END  shift, and go to state 105
+
+
+state 88
+
+   33 exp_list: exp COMMA . exp_list
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    $default  reduce using rule 35 (exp_list)
+
+    exp       go to state 59
+    exp_list  go to state 106
+    lvalue    go to state 14
+
+
+state 89
+
+   21 exp: ID LPAREN exp_list RPAREN .
+
+    $default  reduce using rule 21 (exp)
+
+
+state 90
+
+   23 exp: ID LBRACK exp RBRACK . OF exp
+   42 lvalue: ID LBRACK exp RBRACK .
+
+    OF  shift, and go to state 107
+
+    $default  reduce using rule 42 (lvalue)
+
+
+state 91
+
+   37 field_list: ID EQ . exp
+   38           | ID EQ . exp COMMA field_list
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 108
+    lvalue  go to state 14
+
+
+state 92
+
+   22 exp: ID LBRACE field_list RBRACE .
+
+    $default  reduce using rule 22 (exp)
+
+
+state 93
+
+   41 lvalue: lvalue LBRACK exp RBRACK .
+
+    $default  reduce using rule 41 (lvalue)
+
+
+state 94
+
+   25 exp: IF exp THEN exp ELSE . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 109
+    lvalue  go to state 14
+
+
+state 95
+
+   27 exp: FOR ID ASSIGN exp TO . exp DO exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 110
+    lvalue  go to state 14
+
+
+state 96
+
+   57 type_field: ID . COLON ID
+
+    COLON  shift, and go to state 111
+
+
+state 97
+
+   60 field_dec: FUNCTION ID LPAREN type_fields . RPAREN EQ exp
+   61          | FUNCTION ID LPAREN type_fields . RPAREN COLON ID EQ exp
+
+    RPAREN  shift, and go to state 112
+
+
+state 98
+
+   55 type_fields: type_field .
+   56            | type_field . COMMA type_fields
+
+    COMMA  shift, and go to state 113
+
+    $default  reduce using rule 55 (type_fields)
+
+
+state 99
+
+   58 var_dec: VAR ID COLON ID . ASSIGN exp
+
+    ASSIGN  shift, and go to state 114
+
+
+state 100
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   59 var_dec: VAR ID ASSIGN exp .
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    $default  reduce using rule 59 (var_dec)
+
+
+state 101
+
+   52 type: LBRACE . type_fields RBRACE
+
+    ID  shift, and go to state 96
+
+    $default  reduce using rule 54 (type_fields)
+
+    type_fields  go to state 115
+    type_field   go to state 98
+
+
+state 102
+
+   53 type: ARRAY . OF ID
+
+    OF  shift, and go to state 116
+
+
+state 103
+
+   51 type: ID .
+
+    $default  reduce using rule 51 (type)
+
+
+state 104
+
+   50 type_dec: TYPE ID EQ type .
+
+    $default  reduce using rule 50 (type_dec)
+
+
+state 105
+
+   29 exp: LET decs IN exp_seq END .
+
+    $default  reduce using rule 29 (exp)
+
+
+state 106
+
+   33 exp_list: exp COMMA exp_list .
+
+    $default  reduce using rule 33 (exp_list)
+
+
+state 107
+
+   23 exp: ID LBRACK exp RBRACK OF . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 117
+    lvalue  go to state 14
+
+
+state 108
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   37 field_list: ID EQ exp .
+   38           | ID EQ exp . COMMA field_list
+
+    COMMA  shift, and go to state 118
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    $default  reduce using rule 37 (field_list)
+
+
+state 109
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   25    | IF exp THEN exp ELSE exp .
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    OR        [reduce using rule 25 (exp)]
+    AND       [reduce using rule 25 (exp)]
+    GE        [reduce using rule 25 (exp)]
+    GT        [reduce using rule 25 (exp)]
+    LE        [reduce using rule 25 (exp)]
+    LT        [reduce using rule 25 (exp)]
+    NE        [reduce using rule 25 (exp)]
+    EQ        [reduce using rule 25 (exp)]
+    MINUS     [reduce using rule 25 (exp)]
+    PLUS      [reduce using rule 25 (exp)]
+    DIV       [reduce using rule 25 (exp)]
+    MUL       [reduce using rule 25 (exp)]
+    $default  reduce using rule 25 (exp)
+
+
+state 110
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   27    | FOR ID ASSIGN exp TO exp . DO exp
+
+    DO     shift, and go to state 119
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+
+state 111
+
+   57 type_field: ID COLON . ID
+
+    ID  shift, and go to state 120
+
+
+state 112
+
+   60 field_dec: FUNCTION ID LPAREN type_fields RPAREN . EQ exp
+   61          | FUNCTION ID LPAREN type_fields RPAREN . COLON ID EQ exp
+
+    COLON  shift, and go to state 121
+    EQ     shift, and go to state 122
+
+
+state 113
+
+   56 type_fields: type_field COMMA . type_fields
+
+    ID  shift, and go to state 96
+
+    $default  reduce using rule 54 (type_fields)
+
+    type_fields  go to state 123
+    type_field   go to state 98
+
+
+state 114
+
+   58 var_dec: VAR ID COLON ID ASSIGN . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 124
+    lvalue  go to state 14
+
+
+state 115
+
+   52 type: LBRACE type_fields . RBRACE
+
+    RBRACE  shift, and go to state 125
+
+
+state 116
+
+   53 type: ARRAY OF . ID
+
+    ID  shift, and go to state 126
+
+
+state 117
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   23    | ID LBRACK exp RBRACK OF exp .
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    OR        [reduce using rule 23 (exp)]
+    AND       [reduce using rule 23 (exp)]
+    GE        [reduce using rule 23 (exp)]
+    GT        [reduce using rule 23 (exp)]
+    LE        [reduce using rule 23 (exp)]
+    LT        [reduce using rule 23 (exp)]
+    NE        [reduce using rule 23 (exp)]
+    EQ        [reduce using rule 23 (exp)]
+    MINUS     [reduce using rule 23 (exp)]
+    PLUS      [reduce using rule 23 (exp)]
+    DIV       [reduce using rule 23 (exp)]
+    MUL       [reduce using rule 23 (exp)]
+    $default  reduce using rule 23 (exp)
+
+
+state 118
+
+   38 field_list: ID EQ exp COMMA . field_list
+
+    ID  shift, and go to state 62
+
+    $default  reduce using rule 36 (field_list)
+
+    field_list  go to state 127
+
+
+state 119
+
+   27 exp: FOR ID ASSIGN exp TO exp DO . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 128
+    lvalue  go to state 14
+
+
+state 120
+
+   57 type_field: ID COLON ID .
+
+    $default  reduce using rule 57 (type_field)
+
+
+state 121
+
+   61 field_dec: FUNCTION ID LPAREN type_fields RPAREN COLON . ID EQ exp
+
+    ID  shift, and go to state 129
+
+
+state 122
+
+   60 field_dec: FUNCTION ID LPAREN type_fields RPAREN EQ . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 130
+    lvalue  go to state 14
+
+
+state 123
+
+   56 type_fields: type_field COMMA type_fields .
+
+    $default  reduce using rule 56 (type_fields)
+
+
+state 124
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   58 var_dec: VAR ID COLON ID ASSIGN exp .
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    $default  reduce using rule 58 (var_dec)
+
+
+state 125
+
+   52 type: LBRACE type_fields RBRACE .
+
+    $default  reduce using rule 52 (type)
+
+
+state 126
+
+   53 type: ARRAY OF ID .
+
+    $default  reduce using rule 53 (type)
+
+
+state 127
+
+   38 field_list: ID EQ exp COMMA field_list .
+
+    $default  reduce using rule 38 (field_list)
+
+
+state 128
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   27    | FOR ID ASSIGN exp TO exp DO exp .
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    OR        [reduce using rule 27 (exp)]
+    AND       [reduce using rule 27 (exp)]
+    GE        [reduce using rule 27 (exp)]
+    GT        [reduce using rule 27 (exp)]
+    LE        [reduce using rule 27 (exp)]
+    LT        [reduce using rule 27 (exp)]
+    NE        [reduce using rule 27 (exp)]
+    EQ        [reduce using rule 27 (exp)]
+    MINUS     [reduce using rule 27 (exp)]
+    PLUS      [reduce using rule 27 (exp)]
+    DIV       [reduce using rule 27 (exp)]
+    MUL       [reduce using rule 27 (exp)]
+    $default  reduce using rule 27 (exp)
+
+
+state 129
+
+   61 field_dec: FUNCTION ID LPAREN type_fields RPAREN COLON ID . EQ exp
+
+    EQ  shift, and go to state 131
+
+
+state 130
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   60 field_dec: FUNCTION ID LPAREN type_fields RPAREN EQ exp .
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    $default  reduce using rule 60 (field_dec)
+
+
+state 131
+
+   61 field_dec: FUNCTION ID LPAREN type_fields RPAREN COLON ID EQ . exp
+
+    LPAREN  shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    FOR     shift, and go to state 4
+    LET     shift, and go to state 5
+    BREAK   shift, and go to state 6
+    NIL     shift, and go to state 7
+    ID      shift, and go to state 8
+    STRING  shift, and go to state 9
+    INT     shift, and go to state 10
+    MINUS   shift, and go to state 11
+
+    exp     go to state 132
+    lvalue  go to state 14
+
+
+state 132
+
+    8 exp: exp . PLUS exp
+    9    | exp . MINUS exp
+   10    | exp . MUL exp
+   11    | exp . DIV exp
+   12    | exp . EQ exp
+   13    | exp . NE exp
+   14    | exp . LT exp
+   15    | exp . LE exp
+   16    | exp . GT exp
+   17    | exp . GE exp
+   19    | exp . AND exp
+   20    | exp . OR exp
+   61 field_dec: FUNCTION ID LPAREN type_fields RPAREN COLON ID EQ exp .
+
+    OR     shift, and go to state 34
+    AND    shift, and go to state 35
+    GE     shift, and go to state 36
+    GT     shift, and go to state 37
+    LE     shift, and go to state 38
+    LT     shift, and go to state 39
+    NE     shift, and go to state 40
+    EQ     shift, and go to state 41
+    MINUS  shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    MUL    shift, and go to state 45
+
+    $default  reduce using rule 61 (field_dec)
